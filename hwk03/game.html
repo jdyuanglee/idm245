@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+<!--
+  Ref: https://phaser.io/examples/v2/animation/animation-events
+  Ref: https://phaser.io/examples/v2/text/google-webfonts
+  --
+  Ref: https://fonts.google.com/
+  Ref: https://developers.google.com/speed/libraries/
+-->
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Game Screen</title>
+  <!--Add Phaser Framework library-->
+  <script src="phaser.min.js"></script>
+  <!--Add custom stylesheet-->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div id="phaser-canvas"></div>
+  <!--Custom Javascript-->
+  <script type="text/javascript">
+    window.onload = function() {
+      var game = new Phaser.Game(920 , 720, Phaser.AUTO, 'phaser-canvas', {
+        preload: preload,
+        create: create
+      });
+        
+      
+      // The Google WebFont loader will look for this var/obj
+      WebFontConfig = {
+        google:{
+            families: ['VT323','Orbitron'] 
+          },
+          //active means all requested fonts have finished loading
+          active: function(){
+            game.time.events.add(Phaser.Timer.SECOND, createText, this);
+          }
+      }
+      
+      function preload () {
+          // 37x45 is the size of each frame/cell
+          // load just 18 frame that contain images
+          // if number of frames is not listed ALL frames will load
+          game.load.image('background', 'img/background.png');
+          game.load.image('asteriod_b1', 'img/asteriod_b1.png');
+          game.load.image('asteriod_b2', 'img/asteriod_b2.png');
+          game.load.image('asteriod_b3', 'img/asteriod_b3.png');
+          game.load.image('asteriod_m1', 'img/asteriod_m1.png');
+          game.load.image('asteriod_m2', 'img/asteriod_m2.png');
+          game.load.image('asteriod_s1', 'img/asteriod_s1.png');
+          game.load.image('asteriod_s2', 'img/asteriod_s2.png');
+          game.load.image('asteriod_s3', 'img/asteriod_s3.png');
+          game.load.image('asteriod_s4', 'img/asteriod_s4.png');
+          game.load.image('heart', 'img/heart.png');
+          
+          
+          
+          
+          // game.load.spritesheet('spritesheet', 'img/spritesheet.png',120,120,12);
+          game.load.spritesheet('boost', 'img/boost.png',120,120,3);
+          
+          game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+
+      } // end preload 
+      
+      function create () {
+          var spBackground = game.add.sprite(0,0,'background');
+          var spAsteriod_b1 = game.add.sprite(500,250,'asteriod_b1');
+          var spAsteriod_b2 = game.add.sprite(50,120,'asteriod_b2');
+          // var spAsteriod_b3 = game.add.sprite(0,0,'asteriod_b3');
+          var spAsteriod_m1 = game.add.sprite(600,20,'asteriod_m1');
+          var spAsteriod_m2 = game.add.sprite(700,500,'asteriod_m2');
+          var spAsteriod_s1 = game.add.sprite(250,20,'asteriod_s1');
+          var spAsteriod_s2 = game.add.sprite(100,500,'asteriod_s2');
+          var spAsteriod_s3 = game.add.sprite(200,400,'asteriod_s3');
+          var spAsteriod_s4 = game.add.sprite(800,400,'asteriod_s4');
+          var spHeart = game.add.sprite(730,650,'heart');
+          var spHeart = game.add.sprite(790,650,'heart');
+          var spHeart = game.add.sprite(850,650,'heart');
+          
+
+          
+          
+          
+          // Add Mummy to screen/state/canvas
+          // var spSpaceship = game.add.sprite(100, 200, 'spritesheet');
+          
+          var spSpaceship2 = game.add.sprite(300, 600, 'boost');
+          
+          // Add a walking animation var
+          // var broken = spSpaceship.animations.add('broken');
+          var boost = spSpaceship2.animations.add('boost');
+          
+          
+          // Start playing the animation
+          // spSpaceship.animations.play('broken', 8, true);
+          
+          spSpaceship2.animations.play('boost', 12, true);
+          
+        
+      } // end create 
+    
+        function createText(){
+            //Add text
+            var timeStr = '00:56';
+            var txTimer = game.add.text(game.world.centerX, 50, timeStr);
+            txTimer.anchor.setTo(.5, .5);
+            txTimer.fill = 'white';
+            txTimer.fontSize = 36;
+            txTimer.font = 'Orbitron'; //space here is space
+            
+            var scoreStr = '1200';
+            var txScore = game.add.text(100, 670, scoreStr);
+            txScore.anchor.setTo(.5, .5);
+            txScore.fill = 'Red';
+            txScore.fontSize = 50;
+            txScore.font = 'VT323'; //space here is space
+            
+        }//end createText
+        
+    }; // end window.onload
+
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+

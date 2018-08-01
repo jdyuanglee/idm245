@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+<!--
+  Ref: https://phaser.io/examples/v2/animation/animation-events
+  Ref: https://phaser.io/examples/v2/text/google-webfonts
+  --
+  Ref: https://fonts.google.com/
+  Ref: https://developers.google.com/speed/libraries/
+-->
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Help Screen</title>
+    <!--Add Phaser Framework library-->
+    <script src="phaser.min.js"></script>
+    <!--Add custom stylesheet-->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div id="phaser-canvas"></div>
+    <!--Custom Javascript-->
+    <script type="text/javascript">
+        window.onload = function() {
+            var game = new Phaser.Game(920, 720, Phaser.AUTO, 'phaser-canvas', {
+                preload: preload,
+                create: create
+            });
+
+
+            // The Google WebFont loader will look for this var/obj
+            WebFontConfig = {
+                google: {
+                    families: ['VT323', 'Orbitron']
+                },
+                //active means all requested fonts have finished loading
+                active: function() {
+                    game.time.events.add(Phaser.Timer.SECOND, createText, this);
+                }
+            }
+
+            function preload() {
+                // 37x45 is the size of each frame/cell
+                // load just 18 frame that contain images
+                // if number of frames is not listed ALL frames will load
+                game.load.image('background', 'img/background.png');
+                game.load.image('asteriod_b1', 'img/asteriod_b1.png');
+                game.load.image('asteriod_b2', 'img/asteriod_b2.png');
+                game.load.image('asteriod_b3', 'img/asteriod_b3.png');
+                game.load.image('asteriod_m1', 'img/asteriod_m1.png');
+                game.load.image('asteriod_m2', 'img/asteriod_m2.png');
+                game.load.image('asteriod_s1', 'img/asteriod_s1.png');
+                game.load.image('asteriod_s2', 'img/asteriod_s2.png');
+                game.load.image('asteriod_s3', 'img/asteriod_s3.png');
+                game.load.image('asteriod_s4', 'img/asteriod_s4.png');
+                game.load.image('bullet', 'img/bullet.png');
+                game.load.image('arrows', 'img/arrows.png');
+                game.load.image('heart', 'img/heart.png');
+
+                game.load.spritesheet('spritesheet', 'img/spritesheet.png', 120, 120, 12);
+                game.load.spritesheet('winShipBoost', 'img/winShipBoost.png', 240, 240, 3);
+                game.load.spritesheet('button', 'img/play_button.png', 135, 50);
+
+                game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+
+            } // end preload 
+
+            function create() {
+                var spBackground = game.add.sprite(0, 0, 'background');
+                var spHeart = game.add.sprite(200, 125, 'heart');
+                spHeart.anchor.setTo(.5, .5);
+                var spAsteriod_s2 = game.add.sprite(200, 225, 'asteriod_s1');
+                spAsteriod_s2.anchor.setTo(.5, .5);
+                var spBullet = game.add.sprite(200, 335, 'bullet');
+                spBullet.anchor.setTo(.5, .5);
+                var spArrows = game.add.sprite(410, 450, 'arrows');
+                spArrows.anchor.setTo(.5, .5);
+                var spWinShipBoost = game.add.sprite(200, 450, 'winShipBoost');
+                spWinShipBoost.scale.setTo(0.5, 0.5);
+                spWinShipBoost.anchor.setTo(.5, .5);
+                var boost = spWinShipBoost.animations.add('winShipBoost');
+                spWinShipBoost.animations.play('winShipBoost', 12, true);
+                game.load.spritesheet('button', 'img/play_button.png', 135, 50);
+                var btPlay = game.add.button(game.world.centerX, 650, 'button', actionOnClick, this, 1, 0, 2);
+                btPlay.anchor.setTo(.5, .5);
+            }
+
+            function createText() {
+                var timeStr = 'BACK';
+                var txTimer = game.add.text(game.world.centerX, 650, timeStr);
+                txTimer.anchor.setTo(.5, .5);
+                txTimer.fill = 'white';
+                txTimer.fontSize = 36;
+                txTimer.font = 'VT323';
+
+                var helpStr1 = 'You will have three lives';
+                var txHelp1 = game.add.text(280, 100, helpStr1);
+                txHelp1.fill = 'white';
+                txHelp1.fontSize = 45;
+                txHelp1.font = 'VT323'; //space here is space
+
+                var helpStr3 = 'Avoid the asteriods';
+                var txHelp3 = game.add.text(290, 205, helpStr3);
+                txHelp3.fill = 'white';
+                txHelp3.fontSize = 45;
+                txHelp3.font = 'VT323'; //space here is space
+
+                var helpStr3 = 'Press space to shoot';
+                var txHelp3 = game.add.text(290, 315, helpStr3);
+                txHelp3.fill = 'white';
+                txHelp3.fontSize = 45;
+                txHelp3.font = 'VT323'; //space here is space
+
+                var helpStr4 = 'Use       to steer';
+                var txHelp4 = game.add.text(290, 425, helpStr4);
+                txHelp4.fill = 'white';
+                txHelp4.fontSize = 45;
+                txHelp4.font = 'VT323'; //space here is space
+
+                var helpStr4 = 'Survive in 2 mins to win';
+                var txHelp4 = game.add.text(290, 525, helpStr4);
+                txHelp4.fill = 'white';
+                txHelp4.fontSize = 45;
+                txHelp4.font = 'VT323'; //space here is space
+
+                var timeStr = '02:00';
+                var txTimer = game.add.text(200, 550, timeStr);
+                txTimer.anchor.setTo(.5, .5);
+                txTimer.fill = 'white';
+                txTimer.fontSize = 25;
+                txTimer.font = 'Orbitron'; //space here is space
+
+
+            }
+
+            function actionOnClick() {
+                alert('Play button clicked');
+            }
+
+        }; // end window.onload
+
+    </script>
+</body>
+
+</html>
