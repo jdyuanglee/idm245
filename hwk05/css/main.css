@@ -1,0 +1,13 @@
+body{
+    background-color: #000;
+    padding:0;
+/*    padding-top:15px;*/
+    margin:0;
+/*    overflow:hidden;*/
+}
+
+#phaser-canvas{
+    margin:auto;
+    max-width:920px;
+    border:2px #bbb solid;
+}
